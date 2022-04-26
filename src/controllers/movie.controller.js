@@ -20,7 +20,6 @@ let controller = {
                 result: err.toString(),
             });
         }
-        next();
     },
     addMovie: (req, res) => {
         let movie = req.body;
