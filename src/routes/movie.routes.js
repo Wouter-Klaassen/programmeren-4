@@ -1,21 +1,9 @@
-const express = require('require');
+const express = require('express')
 const movieController = require('../controllers/movie.controller')
-const app = express();
-const port = process.env.PORT || 3000;
-const bodyParser = require('body-parser');
-const router = require('./src/routes/movie.routes');
+const router = express.Router()
 
-app.use(bodyParser.json());
+router.post('/movie', movieController.createMovie)
+router.get('/movie', movieController.getAll)
+router.get('/movie/:movieId', movieController.getById)
 
-app.all("*", (req,res) => {
-
-});
-
-app.use(movieRouter);
-
-
-app.all('*', (req, res)=>{
-
-});
-
-module.exports = router;
+module.exports = router

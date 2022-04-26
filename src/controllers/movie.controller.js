@@ -1,5 +1,27 @@
+const assert = require('assert');
+let database=[];
+let id = 0;
 
 let controller = {
+    validateMovie:(req, res, next)=>{
+        let movie = req.body;
+        let{title,year,studio}=movie;
+        try{
+            assert(typeof title === "string", 'Title must be a string');
+            assert(typeof year === "number", 'Title must be a number');
+            assert(typeof studio === "string", 'Title must be a string');
+            next();
+        }
+        catch(err){
+            console.log(err.code);
+            console.log(err.message);
+            res.status(400).json({
+                status: 400,
+                result: err.toString(),
+            });
+        }
+        next();
+    },
     addMovie: (req, res) => {
         let movie = req.body;
             id++;
