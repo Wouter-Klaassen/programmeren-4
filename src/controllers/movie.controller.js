@@ -1,4 +1,6 @@
 const assert = require('assert');
+const { json } = require('express');
+const dbconnection = require('../../database/dbconnection')
 let database=[];
 let id = 0;
 
@@ -13,12 +15,12 @@ let controller = {
             next();
         }
         catch(err){
-            console.log(err.code);
-            console.log(err.message);
-            res.status(400).json({
-                status: 400,
-                result: err.toString(),
-            });
+            const error={
+                status:400,
+                result: err.message,
+            };
+
+            next(error);
         }
     },
     addMovie: (req, res) => {
@@ -36,12 +38,34 @@ let controller = {
         });
     },
     getAllMovies: (req, res) => {
-        res.status(200).json({
-            status: 200,
-            result: database,
-        });
+
+        dbconnection.getConnection(function(err, connection){
+            if (err) throw err
+          
+            connection.query(
+              'SELECT name, id FROM meal;',
+              function (error, results, fields) {
+          
+                connection.release
+          
+                if (error) throw error;
+                
+                console.log('#results = ', results.length);
+                res.status(200).json(
+                    {
+                        statusCode: 200,
+                        results: results
+                    }
+                )
+                
+                pool.end((err)=>{
+                  console.log('pool was closed.')
+                })
+              }
+            )
+          })
     },
-    getMovieById: (req, res) => {
+    getMovieById: (req, res, next) => {
         const movieId = req.params.movieId;
         console.log('Movie with ID ${movieId} searched');
         let movie = database.filter((item) => item.id == movieId);
@@ -52,6 +76,7 @@ let controller = {
             result: movie,
           });
         } else {
+            const error={}
           res.status(401).json({
             status: 401,
             result: 'Movie with ID ${movieId} not found',
