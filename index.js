@@ -1,81 +1,33 @@
-const express = require("express");
-const app = express();
+const express = require('express')
+const movieRoutes = require('./src/routes/movie.routes')
+require('dotenv').config()
 
-require('dotenv').config();
-const port = process.env.PORT;
+const port = process.env.PORT
+const app = express()
+app.use(express.json())
 
-const bodyParser = require("body-parser");
-app.use(bodyParser.json());
+app.all('*', (req, res, next) => {
+    const method = req.method
+    console.log(`Method ${method} is aangeroepen`)
+    next()
+})
 
-let database = [];
-let id = 0;
+// Alle routes beginnen met /api
+app.use('/api', movieRoutes)
 
-app.all("*", (req, res, next) => {
-  const method = req.method;
-  console.log(`Method ${method} is aangeroepen`);
-  next();
-});
-
-//error handler
-app.use((err, req , res , next)=>{
-  res.status(err.status).json(err);
-  
-});
-
-app.get("/", (req, res) => {
-  res.status(200).json({
-    status: 200,
-    result: "Hello World",
-  });
-});
-
-app.post("/api/movie", (req, res) => {
-  let movie = req.body;
-  id++;
-  movie = {
-    id,
-    ...movie,
-  };
-  console.log(movie);
-  database.push(movie);
-  res.status(201).json({
-    status: 201,
-    result: database,
-  });
-});
-
-app.get("/api/movie/:movieId", (req, res, next) => {
-  const movieId = req.params.movieId;
-  console.log(`Movie met ID ${movieId} gezocht`);
-  let movie = database.filter((item) => item.id == movieId);
-  if (movie.length > 0) {
-    console.log(movie);
-    res.status(200).json({
-      status: 200,
-      result: movie,
-    });
-  } else {
+app.all('*', (req, res) => {
     res.status(401).json({
-      status: 401,
-      result: `Movie with ID ${movieId} not found`,
-    });
-  }
-});
+        status: 401,
+        result: 'End-point not found',
+    })
+})
 
-app.get("/api/movie", (req, res, next) => {
-  res.status(200).json({
-    status: 200,
-    result: database,
-  });
-});
-
-app.all("*", (req, res) => {
-  res.status(401).json({
-    status: 401,
-    result: "End-point not found",
-  });
-});
+// Hier moet je nog je Express errorhandler toevoegen.
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+    console.log(`Example app listening on port ${port}`)
+})
+
+// we exporteren de Express app server zodat we die in
+// de integration-testcases kunnen gebruiken.
+module.exports = app

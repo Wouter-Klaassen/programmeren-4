@@ -4,17 +4,26 @@
   "description": "Programmeren 4 SAM server",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+      "start": "nodemon index.js",
+      "test": "mocha -reporter spec test/**/*.test.js --exit"
   },
-  "author": "Wouter",
+  "author": "Robin",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.15"
+      "chai": "^4.3.6",
+      "chai-http": "^4.3.0",
+      "mocha": "^9.2.2",
+      "nodemon": "^2.0.15"
   },
   "dependencies": {
-    "dotenv": "^16.0.0",
-    "express": "^4.17.3",
-    "mysql": "^2.18.1"
+      "dotenv": "^16.0.0",
+      "express": "^4.17.3",
+      "mysql2": "^2.3.3"
+  },
+  "prettier": {
+      "trailingComma": "es5",
+      "tabWidth": 4,
+      "semi": false,
+      "singleQuote": true
   }
 }
