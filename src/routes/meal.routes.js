@@ -1,26 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/user.controller');
-const authController = require('../controllers/auth.controller');
 
-//########## Users ###############
+const mealController = require('../controllers/meal.controller');
+const authController = require('../controllers/authentication.controller');
 
-//Register user
-router.post("/user", authController.validateToken, userController.validateUser, userController.addUser);
+//########## Meals ###############
 
-//Get all users
-router.get("/user", authController.validateToken, userController.getAllUsers);
+//Add a meal
+router.post("/meal", authController.validateToken, mealController.validateMeal, mealController.addMeal);
 
-//Request current user profile
-router.get("/user/profile", authController.validateToken, userController.getUserProfile)
+//Get all meals
+router.get("/meal", mealController.getAllMeals);
 
-//Get user by id
-router.get("/user/:id", authController.validateToken, userController.validateId, userController.getUserById)
+//Get meal by id
+router.get("/meal/:id", mealController.validateId, mealController.getMealById);
 
-//Update user
-router.put("/user/:id", authController.validateToken, userController.validateId, userController.validateUser, userController.updateUser);
+//Update meal
+router.put("/meal/:id", authController.validateToken, mealController.validateId, mealController.validateMeal, mealController.updateMeal);
 
-//Delete user
-router.delete("/user/:id", authController.validateToken, userController.validateId, userController.deleteUser);
+//Delete meal
+router.delete("/meal/:id", authController.validateToken, mealController.validateId, mealController.deleteMeal);
 
 module.exports = router;
