@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const mealController = require('../controllers/meal.controller');
-const authController = require('../controllers/authentication.controller');
+const authController = require('../controllers/auth.controller');
 
 //########## Meals ###############
 
