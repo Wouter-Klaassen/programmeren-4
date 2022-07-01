@@ -8,6 +8,6 @@ router.post(
     movieController.createMovie
 )
 router.get('/movie', movieController.getAll)
-router.get('/movie/:movieId', movieController.getById)
+router.get('/movie/:id', movieController.getById)
 
 module.exports = router

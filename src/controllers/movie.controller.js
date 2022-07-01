@@ -1,5 +1,5 @@
-const database = require('../../database/inmemdb')
-const dbconnection = require('../../database/dbconnection')
+const database = require('../database/inmemdb')
+const dbconnection = require('../database/dbconnection')
 const assert = require('assert')
 
 /**

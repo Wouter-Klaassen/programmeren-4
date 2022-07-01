@@ -5,7 +5,7 @@ const chaiHttp = require('chai-http')
 const server = require('../../index')
 const assert = require('assert')
 require('dotenv').config()
-const dbconnection = require('../../database/dbconnection')
+const dbconnection = require('../../src/database/dbconnection')
 
 chai.should()
 chai.use(chaiHttp)
