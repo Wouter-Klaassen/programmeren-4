@@ -7,7 +7,8 @@ const authController = require('../controllers/auth.controller');
 //########## Meals ###############
 
 //Add a meal
-router.post("/meal", authController.validateToken, mealController.validateMeal, mealController.addMeal);
+//authController.validateToken,
+router.post("/meal",  mealController.validateMeal, mealController.addMeal);
 
 //Get all meals
 router.get("/meal", mealController.getAllMeals);
@@ -16,9 +17,9 @@ router.get("/meal", mealController.getAllMeals);
 router.get("/meal/:id", mealController.validateId, mealController.getMealById);
 
 //Update meal
-router.put("/meal/:id", authController.validateToken, mealController.validateId, mealController.validateMeal, mealController.updateMeal);
+router.put("/meal/:id", mealController.validateId, mealController.validateMeal, mealController.updateMeal);
 
 //Delete meal
-router.delete("/meal/:id", authController.validateToken, mealController.validateId, mealController.deleteMeal);
+router.delete("/meal/:id", mealController.validateId, mealController.deleteMeal);
 
 module.exports = router;

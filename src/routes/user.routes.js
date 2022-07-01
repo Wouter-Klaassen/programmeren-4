@@ -5,22 +5,23 @@ const authController = require('../controllers/auth.controller');
 
 //########## Users ###############
 
-//Register user
-router.post("/user", authController.validateToken, userController.validateUser, userController.addUser);
+//Register user 
+//authController.validateToken,
+router.post("/user", userController.validateUser, userController.addUser);
 
 //Get all users
-router.get("/user", authController.validateToken, userController.getAllUsers);
+router.get("/user", userController.getAllUsers);
 
 //Request current user profile
-router.get("/user/profile", authController.validateToken, userController.getUserProfile)
+router.get("/user/profile", userController.getUserProfile)
 
 //Get user by id
-router.get("/user/:id", authController.validateToken, userController.validateId, userController.getUserById)
+router.get("/user/:id", userController.validateId, userController.getUserById)
 
 //Update user
-router.put("/user/:id", authController.validateToken, userController.validateId, userController.validateUser, userController.updateUser);
+router.put("/user/:id", userController.validateId, userController.validateUser, userController.updateUser);
 
 //Delete user
-router.delete("/user/:id", authController.validateToken, userController.validateId, userController.deleteUser);
+router.delete("/user/:id", userController.validateId, userController.deleteUser);
 
 module.exports = router;
