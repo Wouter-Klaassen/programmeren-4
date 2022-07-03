@@ -6,7 +6,6 @@ const authController = require('../controllers/auth.controller');
 //########## Users ###############
 
 //Register user 
-//authController.validateToken,
 router.post("/user", authController.validateToken, userController.validateUser, userController.addUser);
 
 //Get all users
